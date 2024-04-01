@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>All Transcripts</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  
 </head>
-<body class="bg-gray-100 font-sans antialiased">
-
+<body class="bg-gray-100 font-sans anti">
     <nav class="bg-gray-900 dark:bg-gray-800 p-4 text-white flex justify-between">
         <div>
           <h1 class="text-3xl font-bold">AI Transcriber</h1>
         </div>
         <div class="flex items-center">
-          <a href="" class="text-white hover:underline ">Signup</a>
-
+          <a href="" class="text-white hover:underline mx-4">Saved Transcripts</a>
+          <a href="" class="text-white hover:underline">Logout</a>
           <!-- Dark Mode Button -->
           <button id="darkModeToggle" class="bg-gray-700 dark:bg-yellow-300 text-white dark:text-gray-800 rounded-full px-3 py-1 transition-colors duration-300">
             <svg id="sunIcon" class="w-6 h-6 dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -26,47 +26,33 @@
           </button>
         </div>
       </nav>
-    
-    
-      <!-- Login Form -->
-      <div class ="flex items-center justify-center h-screen">
-        <div class="bg-white p-6 rounded-md shadow-md w-96"
 
-            <form class="space-y-4">
-                <h2 class="text-2xl font-bold text-center">Login</h1>
-                <div>
-                    <label for="email" class="block">Email</label>
-                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2">
-                </div>
-                <div>
-                    <label for="password" class="block">Password</label>
-                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2">
-                </div>
-                <div>
-                    <button type="submit" class="w-full bg-blue-500 text-white rounded-md p-2 hover:bg-blue-700">Login</button>
-                </div>
-            </form>
-
+    <!-- Main Content -->
+    <div class="container mx-auto mt-10 px-4 sm:px-0">
+        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <section>
+        <h2 class="text-xl mb-4 font-semibold ">All Transcripts</h2>
+        <div class="space-y-4">
+           <div class="border border-gray-300 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold" >Transcripts title</h3>
+            <p>Transcript content goes here.</p>
+           </div>
+           <div class="border border-gray-300 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold" >Transcripts title</h3>
+            <p>Transcript content goes here.</p>
+           </div>
+           
         </div>
-      </div>
-
-
-
-
-
-
- <!-- JavaScript for Dark Mode Toggle -->
- <script>
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const htmlElement = document.documentElement;
-    const sunIcon = document.getElementById('sunIcon');
-    const moonIcon = document.getElementById('moonIcon');
-
-    darkModeToggle.addEventListener('click', function() {
-      htmlElement.classList.toggle('dark');
-      sunIcon.classList.toggle('hidden');
-      moonIcon.classList.toggle('hidden');
-    });
-  </script>
+    </section>
+</div>
+</div>
+    <footer>
+        <div class="text-center p-4 text-black mt-8">
+            <div class="content has-text-centered">
+                <p>Made with ❤️</p>
+                <a href="https://github.com/eshanpandey"><i class="fa fa-github" style="font-size:36px"></i></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signup</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans antialiased">
@@ -13,7 +13,7 @@
           <h1 class="text-3xl font-bold">AI Transcriber</h1>
         </div>
         <div class="flex items-center">
-          <a href="" class="text-white hover:underline ">Signup</a>
+          <a href="" class="text-white hover:underline ">Login</a>
 
           <!-- Dark Mode Button -->
           <button id="darkModeToggle" class="bg-gray-700 dark:bg-yellow-300 text-white dark:text-gray-800 rounded-full px-3 py-1 transition-colors duration-300">
@@ -33,17 +33,25 @@
         <div class="bg-white p-6 rounded-md shadow-md w-96"
 
             <form class="space-y-4">
-                <h2 class="text-2xl font-bold text-center">Login</h1>
+                <h2 class="text-2xl font-bold text-center">Signup</h2>
                 <div>
                     <label for="email" class="block">Email</label>
-                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2">
+                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2"placeholder="Enter your Email">
+                </div>
+                <div>
+                    <label for="email" class="block">Username</label>
+                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2"placeholder="What should we call you?">
                 </div>
                 <div>
                     <label for="password" class="block">Password</label>
-                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2">
+                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2"placeholder="Enter password">
                 </div>
                 <div>
-                    <button type="submit" class="w-full bg-blue-500 text-white rounded-md p-2 hover:bg-blue-700">Login</button>
+                    <label for="password" class="block">Confirm Password</label>
+                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2" placeholder="Repeat your password">
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-blue-500 text-white rounded-md p-2 hover:bg-blue-700">Signup</button>
                 </div>
             </form>
 
