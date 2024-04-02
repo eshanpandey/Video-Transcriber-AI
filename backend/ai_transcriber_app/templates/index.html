@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Video Transcriber</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <style>
+    .center {
+      text-align: center;
+    }
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes rotate {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    .load {
+      width: 100px;
+      height: 100px;
+      margin: 110px auto 0;
+      border: solid 10px #06e085;
+      border-radius: 50%;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      -webkit-transition: all 0.5s ease-in;
+      -webkit-animation-name: rotate;
+      -webkit-animation-duration: 1.0s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+
+      transition: all 0.5s ease-in;
+      animation-name: rotate;
+      animation-duration: 1.0s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    /* Styles for dark mode */
+    .dark .bg-gray-100 {
+      background-color: #1a202c !important;
+    }
+
+    .dark .text-gray-900 {
+      color: #e2e8f0 !important;
+    }
+
+    .dark .bg-white {
+      background-color: #1a202c !important;
+    }
+
+    .dark .text-gray-700 {
+      color: #e2e8f0 !important;
+    }
+
+    .dark .bg-gray-800 {
+      background-color: #2d3748 !important;
+    }
+
+    .dark .text-gray-200 {
+      color: #cbd5e0 !important;
+    }
+
+    /* Additional styles */
+    .welcome-dark {
+      color: #cbd5e0;
+    }
+
+    .footer-dark {
+      color: #cbd5e0;
+      background-color: #2d3748;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const htmlElement = document.documentElement;
+      const welcomeText = document.getElementById('welcomeText');
+      const footer = document.getElementById('footer');
+
+      darkModeToggle.addEventListener('click', function() {
+        htmlElement.classList.toggle('dark');
+        welcomeText.classList.toggle('welcome-dark');
+        footer.classList.toggle('footer-dark');
+      });
+    });
+  </script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-900 font-sans antialiased">
+  <!-- Navbar -->
+  <nav class="bg-gray-900 p-4 text-white flex justify-between">
+    <div>
+      <h1 class="text-3xl font-bold">AI Transcriber</h1>
+    </div>
+    <div class="flex items-center">
+      <a href="" class="text-white hover:underline mx-4">Saved Transcripts</a>
+      <a href="" class="text-white hover:underline">Logout</a>
+      <!-- Dark Mode Button -->
+      <button id="darkModeToggle" class="bg-gray-700 text-white rounded-full px-3 py-1 transition-colors duration-300">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <br>
+  <!-- Main Content -->
+  <div class="center">
+    <h1 id="welcomeText">
+      <a href="" class="text-black text-3xl hover:underline font-sans font-semibold">Welcome</a>
+    </h1>
+  </div>
+  <!--Intro-->
+
+  <div class="flex-grow container mx-auto mt-10 px-4 sm:px-0">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col">
+      <div class="text-center">
+        <p class="text-gray-700 text font-semibold">
+          Generate a high quality transcript of your video in minutes.
+          Simply enter the URL of the video you want to transcribe and let our AI do the rest.
+        </p>
+      </div>
+      <br>
+      <div>
+        <h2 class="text-xl mb-4 font-semibold">Enter Video Link</h2>
+        <div class="flex space-x-4">
+          <input id="youtubelink" type="URL" placeholder="Paste the video link here..." class="flex-grow p-2 border border-green-400 rounded-lg">
+          <button id="generateblogbutton" class="bg-green-500 text-white px-4 py-2 rounded-r-md hover:bg-green-600 transition-colors">Transcribe</button>
+        </div>
+      </div>
+      <!--display a loading animation here-->
+      <div style="display: none;" id="loading-circle" class="load"></div>
+
+      <section class="mt-10 flex-grow">
+        <h2 class="text-xl mb-4 font-semibold">Transcript:</h2>
+        <div id="blogContent" class="mt-2 text-gray-700 space-y-4">
+          <!-- Transcription will be displayed here -->
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer id="footer" class="text-align: center p-4 text-black mt-6">
+    <div class="container">
+      <div class="content has-text-centered">
+      <a href="https://github.com/eshanpandey"><i class="fa fa-github" style="font-size:36px"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
