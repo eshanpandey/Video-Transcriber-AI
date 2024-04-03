@@ -29,35 +29,40 @@
     
     
       <!-- Login Form -->
-      <div class ="flex items-center justify-center h-screen">
-        <div class="bg-white p-6 rounded-md shadow-md w-96"
-
-            <form class="space-y-4">
+      <div class="flex items-center justify-center h-screen">
+        <div class="bg-white p-6 rounded-md shadow-md w-96">
+            <form class="space-y-4" action="" method="POST">
+                {% csrf_token %}
+    
+                {% if error_message %}
+                <div align="center" style="color: red;">
+                    <h2>{{ error_message }}</h2>
+                </div>
+                {% endif %}
+    
                 <h2 class="text-2xl font-bold text-center">Signup</h2>
                 <div>
                     <label for="email" class="block">Email</label>
-                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2"placeholder="Enter your Email">
+                    <input type="email" id="email" name="username" class="w-full border border-gray-300 rounded-md p-2" placeholder="Enter your Email">
                 </div>
                 <div>
-                    <label for="email" class="block">Username</label>
-                    <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2"placeholder="What should we call you?">
+                    <label for="username" class="block">Username</label>
+                    <input type="text" id="username" name="email" class="w-full border border-gray-300 rounded-md p-2" placeholder="What should we call you?">
                 </div>
                 <div>
                     <label for="password" class="block">Password</label>
-                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2"placeholder="Enter password">
+                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2" placeholder="Enter password">
                 </div>
                 <div>
-                    <label for="password" class="block">Confirm Password</label>
-                    <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2" placeholder="Repeat your password">
+                    <label for="repeatPassword" class="block">Confirm Password</label>
+                    <input type="password" id="repeatPassword" name="repeatPassword" class="w-full border border-gray-300 rounded-md p-2" placeholder="Repeat your password">
                 </div>
                 <div>
                     <button type="submit" class="w-full bg-blue-500 text-white rounded-md p-2 hover:bg-blue-700">Signup</button>
                 </div>
             </form>
-
         </div>
-      </div>
-
+    </div>
 
 
 
