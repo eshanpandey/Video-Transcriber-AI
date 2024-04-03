@@ -74,10 +74,21 @@ WSGI_APPLICATION = 'ai_transcriber_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'database',
+        'USER': 'fl0user',
+        'PASSWORD': 'UBPof0ZzIK7J',
+        'HOST': 'ep-silent-glade-a14ic7vn.ap-southeast-1.aws.neon.fl0.io',
+        'PORT': '5432',
     }
 }
 
