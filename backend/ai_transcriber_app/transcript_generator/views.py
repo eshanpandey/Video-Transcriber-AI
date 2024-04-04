@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 # Create your views here.
 @login_required
 def index(request):
@@ -19,11 +21,9 @@ def user_login(request):
           login(request,user)
           return redirect('/')
       else:
-          error_message="Invalid Credentials"
-          return render(request,'login.html',{{'error_message':error_message}})
+            error_message = "No such user found recheck credentials"
+            return render(request, 'login.html', {'error_message': error_message})
     return render(request,'login.html')
-
-      
 
 def user_signup(request):
     if request.method == 'POST':
@@ -46,6 +46,17 @@ def user_signup(request):
             return render(request, 'signup.html', {'error_message':error_message})
         
     return render(request, 'signup.html')
+
+@csrf_exempt
+def generate_transcript(request):
+    if request.method=='POST':
+        try:
+            data=json.loads(request.body)
+            yt_link = data['link']
+        except (KeyError, json.JSONDecodeError):
+            return JsonResponse({'error':'Invalid data sent'}, status=400)
+    else:
+        return JsonResponse({'error':'Ivalid request method'}, status=405)
 
 
 

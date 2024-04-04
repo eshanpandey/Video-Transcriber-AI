@@ -94,7 +94,7 @@
     <div>
     <h2 class="text-xl mb-4 font-semibold">Enter Video Link</h2>
     <div class ="flex space-x-4">
-        <input id="youtubelink"type="URL"placeholder="Paste the video link here..." class="flex-grow p-2 border border-green-400 rounded-lg">
+        <input id="youtubeLink" type="URL" placeholder="Paste the video link here..." class="flex-grow p-2 border border-green-400 rounded-lg">
          <button id="generateblogbutton" class="bg-green-500 text-white px-4 py-2 rounded-r-md hover:bg-green-600 transition-colors">Transcribe</button>
     </div>
   </div>
@@ -135,6 +135,42 @@
       sunIcon.classList.toggle('hidden');
       moonIcon.classList.toggle('hidden');
     });
+  </script>
+    <script>
+      document.getElementById('generateblogbutton').addEventListener('click', async () => {
+          const youtubeLink = document.getElementById('youtubeLink').value;
+          const blogContent = document.getElementById('blogContent');
+          
+          if(youtubeLink) {
+              document.getElementById('loading-circle').style.display = 'block';
+              
+              blogContent.innerHTML = ''; 
+
+              const endpointUrl = '/generate-transcript';
+              
+              try {
+                  const response = await fetch(endpointUrl, {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ link: youtubeLink })
+                  });
+
+                  const data = await response.json();
+
+                  blogContent.innerHTML = data.content;
+
+              } catch (error) {
+                  console.error("Error occurred:", error);
+                  alert("Something went wrong. Please try again later.");
+                  
+              }
+              document.getElementById('loading-circle').style.display = 'none';
+          } else {
+              alert("Please enter a YouTube link.");
+          }
+      });
   </script>
 </body>
 </html>
