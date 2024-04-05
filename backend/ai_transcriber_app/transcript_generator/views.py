@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import json
 from pytube import YouTube
 # Create your views here.
+
 @login_required
 def index(request):
     return render(request, 'index.html')
@@ -56,6 +57,10 @@ def generate_transcript(request):
             yt_link = data['link']
         except (KeyError, json.JSONDecodeError):
             return JsonResponse({'error':'Invalid data sent'}, status=400)
+        
+        title=yt_title(yt_link)
+
+
     else:
         return JsonResponse({'error':'Ivalid request method'}, status=405)
 
@@ -71,3 +76,8 @@ def user_logout(request):
     logout(request)
     return redirect('/')
 
+
+def yt_title(link):
+    yt=YouTube(link)
+    title=yt.title
+    return title
