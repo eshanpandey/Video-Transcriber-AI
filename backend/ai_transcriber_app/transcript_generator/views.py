@@ -5,9 +5,19 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.conf import settings
 import json
 from pytube import YouTube
+import os
+import assemblyai as aa
+import dotenv
+from dotenv import load_dotenv
+import openai
+
 # Create your views here.
+load_dotenv()
+ASSEMBLYAI_API_KEY = os.getenv('ASSEMBLYAI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 @login_required
 def index(request):
@@ -59,6 +69,17 @@ def generate_transcript(request):
             return JsonResponse({'error':'Invalid data sent'}, status=400)
         
         title=yt_title(yt_link)
+        #getting the transcript from the audio file
+        transcript=get_transcription(yt_link)
+        if not transcript:
+            return JsonResponse({'error':'Transcription failed'}, status=500)
+        
+        summary_content=generate_article(transcript)
+        if not summary_content:
+            return JsonResponse({'error':'Article generation failed'}, status=500)
+        
+
+        return JsonResponse({'content':summary_content})
 
 
     else:
@@ -81,3 +102,35 @@ def yt_title(link):
     yt=YouTube(link)
     title=yt.title
     return title
+
+def get_transcription(link):
+    audio_file=download_audio(link)
+    aa.settings.api_key= ASSEMBLYAI_API_KEY
+    transcriber=aa.Transcriber()
+    transcript=transcriber.transcribe(audio_file)
+    os.remove(audio_file)
+    return transcript.text
+
+
+
+def download_audio(link):
+    yt = YouTube(link)
+    video = yt.streams.filter(only_audio=True).first()
+    out_file = video.download(output_path=settings.MEDIA_ROOT)
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    os.rename(out_file, new_file)
+    return new_file
+
+
+def generate_article(transcript):
+    openai.api_key =  OPENAI_API_KEY
+
+    prompt = f"Based on the following transcript, write a comprehensive summary and mention key points but do not make it look like a youtube video make it look like a blog article on the topic of the video. \n\n {transcript}\n\nArticle:"
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=1000
+    )
+    generated_content=response.choices[0].text.strip()
+    return generated_content
