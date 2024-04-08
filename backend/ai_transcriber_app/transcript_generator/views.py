@@ -88,7 +88,8 @@ def user_signup(request):
 
 prompt="""You are a notes maker You will be taking the transcript text
 and summarizing the entire video's crux without making it look like a video but a blog article
-and providing the important summary in points. Please provide the summary of the text given here:  """
+and providing the important topics and their explanation in points use simple text only
+ Please provide the summary of the text given here:  """
 
 
 @csrf_exempt
