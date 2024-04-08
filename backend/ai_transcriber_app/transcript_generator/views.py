@@ -10,14 +10,14 @@ import json
 from pytube import YouTube
 import os
 import assemblyai as aa
-import dotenv
 from dotenv import load_dotenv
-import openai
-
+import requests
+import google.generativeai as genai
 # Create your views here.
 load_dotenv()
+
 ASSEMBLYAI_API_KEY = os.getenv('ASSEMBLYAI_API_KEY')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @login_required
 def index(request):
@@ -59,32 +59,75 @@ def user_signup(request):
         
     return render(request, 'signup.html')
 
+# @csrf_exempt
+# def generate_transcript(request):
+#     if request.method=='POST':
+#         try:
+#             data=json.loads(request.body)
+#             yt_link = data['link']
+#         except (KeyError, json.JSONDecodeError):
+#             return JsonResponse({'error':'Invalid data sent'}, status=400)
+        
+#         title=yt_title(yt_link)
+#         #getting the transcript from the audio file
+#         transcript=get_transcription(yt_link)
+#         if not transcript:
+#             return JsonResponse({'error':'Transcription failed'}, status=500)
+        
+#         summary_content=generate_article(transcript)
+#         if not summary_content:
+#             return JsonResponse({'error':'Article generation failed'}, status=500)
+        
+
+#         return JsonResponse({'content':summary_content})
+
+
+#     else:
+#         return JsonResponse({'error':'Ivalid request method'}, status=405)
+
+
+prompt="""You are a notes maker You will be taking the transcript text
+and summarizing the entire video's crux without making it look like a video but a blog article
+and providing the important summary in points. Please provide the summary of the text given here:  """
+
+
 @csrf_exempt
 def generate_transcript(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
-            data=json.loads(request.body)
+            data = json.loads(request.body)
             yt_link = data['link']
         except (KeyError, json.JSONDecodeError):
-            return JsonResponse({'error':'Invalid data sent'}, status=400)
-        
-        title=yt_title(yt_link)
-        #getting the transcript from the audio file
-        transcript=get_transcription(yt_link)
-        if not transcript:
-            return JsonResponse({'error':'Transcription failed'}, status=500)
-        
-        summary_content=generate_article(transcript)
-        if not summary_content:
-            return JsonResponse({'error':'Article generation failed'}, status=500)
-        
-
-        return JsonResponse({'content':summary_content})
+            return JsonResponse({'error': 'Invalid data sent'}, status=400)
 
 
+        # get yt title
+        title = yt_title(yt_link)
+
+        # get transcript
+        transcription = get_transcription(yt_link)
+        if not transcription:
+            return JsonResponse({'error': " Failed to get transcript"}, status=500)
+
+
+       
+        article_content = generate_article(transcription, prompt)
+        if not article_content:
+            return JsonResponse({'error': " Failed to generate blog article"}, status=500)
+
+        # # save article to database
+        # new_blog_article = BlogPost.objects.create(
+        #     user=request.user,
+        #     youtube_title=title,
+        #     youtube_link=yt_link,
+        #     generated_content=article_content,
+        # )
+        # new_blog_article.save()
+
+        # return blog article as a response
+        return JsonResponse({'content': article_content})
     else:
-        return JsonResponse({'error':'Ivalid request method'}, status=405)
-
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 
@@ -108,6 +151,7 @@ def get_transcription(link):
     aa.settings.api_key= ASSEMBLYAI_API_KEY
     transcriber=aa.Transcriber()
     transcript=transcriber.transcribe(audio_file)
+    print(transcript.text)
     os.remove(audio_file)
     return transcript.text
 
@@ -123,14 +167,9 @@ def download_audio(link):
     return new_file
 
 
-def generate_article(transcript):
-    openai.api_key =  OPENAI_API_KEY
+def generate_article(transcript,prompt):
+ model=genai.GenerativeModel("gemini-pro")
+ response=model.generate_content(prompt+transcript)
+ return response.text
 
-    prompt = f"Based on the following transcript, write a comprehensive summary and mention key points but do not make it look like a youtube video make it look like a blog article on the topic of the video. \n\n {transcript}\n\nArticle:"
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1000
-    )
-    generated_content=response.choices[0].text.strip()
-    return generated_content
+
