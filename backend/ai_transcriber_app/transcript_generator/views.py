@@ -13,6 +13,7 @@ import assemblyai as aa
 from dotenv import load_dotenv
 import requests
 import google.generativeai as genai
+from .models import ArticlePost
 # Create your views here.
 load_dotenv()
 
@@ -88,8 +89,9 @@ def user_signup(request):
 
 prompt="""You are a notes maker You will be taking the transcript text
 and summarizing the entire video's crux without making it look like a video but a blog article
-and providing the important topics and their explanation in points use simple text only
- Please provide the summary of the text given here:  """
+and providing the important topics and their explanation in points use simple text only like 
+ try to write simple paragraphs and points.
+ make the language easy to understand for everyone."""
 
 
 @csrf_exempt
@@ -102,10 +104,10 @@ def generate_transcript(request):
             return JsonResponse({'error': 'Invalid data sent'}, status=400)
 
 
-        # get yt title
+        # getting video title
         title = yt_title(yt_link)
 
-        # get transcript
+        # getting transcript for the video
         transcription = get_transcription(yt_link)
         if not transcription:
             return JsonResponse({'error': " Failed to get transcript"}, status=500)
@@ -116,14 +118,14 @@ def generate_transcript(request):
         if not article_content:
             return JsonResponse({'error': " Failed to generate blog article"}, status=500)
 
-        # # save article to database
-        # new_blog_article = BlogPost.objects.create(
-        #     user=request.user,
-        #     youtube_title=title,
-        #     youtube_link=yt_link,
-        #     generated_content=article_content,
-        # )
-        # new_blog_article.save()
+        # save article to database
+        new_article_post = ArticlePost.objects.create(
+            user=request.user,
+            youtube_title=title,
+            youtube_link=yt_link,
+            generated_content=article_content,
+        )
+        new_article_post.save()
 
         # return blog article as a response
         return JsonResponse({'content': article_content})
@@ -152,7 +154,6 @@ def get_transcription(link):
     aa.settings.api_key= ASSEMBLYAI_API_KEY
     transcriber=aa.Transcriber()
     transcript=transcriber.transcribe(audio_file)
-    print(transcript.text)
     os.remove(audio_file)
     return transcript.text
 

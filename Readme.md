@@ -83,5 +83,5 @@ This project is licensed under the [MIT License](LICENSE).
 ## Acknowledgments
 
 - [AssemblyAI](https://www.assemblyai.com/) for their Speech-to-Text API
-- [Gemini](https://www.gemini.com/) for their Text Summarization API
+- [Gemini](https://ai.google.dev/) for their Text Summarization API
 - [Django](https://www.djangoproject.com/) for the web framework
