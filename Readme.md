@@ -1,6 +1,6 @@
 # Video Summarizer
 
-Video Summarizer is a Django web application that allows users to enter YouTube video URLs, transcribe the audio using AssemblyAI, and generate useful notes from the transcription using Gemini. Users can sign up, log in, save their notes, and view them later.
+Video Summarizer is a Django web application that allows users to enter YouTube video URLs, transcribe the audio using AssemblyAI, and generate useful notes from the transcription using Google's Gemini API. Users can sign up, log in, save their notes, and view them later.
 
 ## Features
 
