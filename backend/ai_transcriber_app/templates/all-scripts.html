@@ -11,7 +11,7 @@
 <body class="bg-gray-100 font-sans anti">
     <nav class="bg-gray-900 dark:bg-gray-800 p-4 text-white flex justify-between">
         <div>
-          <h1 class="text-3xl font-bold">AI Transcriber</h1>
+          <h1 class="text-3xl font-bold">Summarizer AI</h1>
         </div>
         <div class="flex items-center">
           <a href="" class="text-white hover:underline mx-4">Saved Transcripts</a>
@@ -34,15 +34,15 @@
     <section>
         <h2 class="text-xl mb-4 font-semibold ">All Transcripts</h2>
         <div class="space-y-4">
+
+          {% for article in articles reversed %}
+          <a href="full-article/{{article.id}}">
            <div class="border border-gray-300 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold" >Transcripts title</h3>
-            <p>Transcript content goes here.</p>
+            <h3 class="text-lg font-semibold" >{{article.video_title}}</h3>
+            <p>{{article.generated_content|truncatechars:80}}</p>
            </div>
-           <div class="border border-gray-300 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold" >Transcripts title</h3>
-            <p>Transcript content goes here.</p>
-           </div>
-           
+           </a>
+           {% endfor %}
         </div>
     </section>
 </div>
@@ -50,7 +50,7 @@
     <footer>
         <div class="text-center p-4 text-black mt-8">
             <div class="content has-text-centered">
-                <p>Made with ❤️</p>
+              
                 <a href="https://github.com/eshanpandey"><i class="fa fa-github" style="font-size:36px"></i></a>
             </div>
         </div>

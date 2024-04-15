@@ -121,7 +121,7 @@ def generate_transcript(request):
         # save article to database
         new_article_post = ArticlePost.objects.create(
             user=request.user,
-            youtube_title=title,
+            video_title=title,
             youtube_link=yt_link,
             generated_content=article_content,
         )
@@ -136,7 +136,8 @@ def generate_transcript(request):
 
 @login_required
 def all_scripts(request):
-    return render(request,'all-scripts.html')
+    articles=ArticlePost.objects.filter(user=request.user)
+    return render(request,'all-scripts.html',{'articles': articles})   
 
 
 def user_logout(request):
@@ -174,4 +175,9 @@ def generate_article(transcript,prompt):
  response=model.generate_content(prompt+transcript)
  return response.text
 
-
+def full_article(request,pk):
+    full_article=ArticlePost.objects.get(id=pk)
+    if request.user == full_article.user:
+        return render (request,'full-article.html',{'full_article': full_article})
+    else:
+        return redirect('/')

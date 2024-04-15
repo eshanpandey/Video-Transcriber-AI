@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transcript Details</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
 
 </head>
 <body class="bg-gray-100 font-sans antialiased">
   <!-- Navbar -->
   <nav class="bg-gray-900 dark:bg-gray-800 p-4 text-white flex justify-between">
     <div>
-      <h1 class="text-3xl font-bold">AI Transcriber</h1>
+      <h1 class="text-3xl font-bold">Summarizer AI</h1>
     </div>
     <div class="flex items-center">
       <a href="" class="text-white hover:underline mx-4">Saved Transcripts</a>
-      <a href="" class="text-white hover:underline">Logout</a>
+      <a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a>
       <!-- Dark Mode Button -->
       <button id="darkModeToggle" class="bg-gray-700 dark:bg-yellow-300 text-white dark:text-gray-800 rounded-full px-3 py-1 transition-colors duration-300">
         <svg id="sunIcon" class="w-6 h-6 dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -32,22 +34,21 @@
     <div class="container mx-auto mt-10 px-4 sm:px-0">
         <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
     <section>
-        <h2 class="text-xl mb-4 font-semibold">Full Transcript</h2>
+        <h2 class="text-xl mb-4 font-semibold">Full Summary</h2>
         <div class="border border-gray-300 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold">TITLE OF Transcript</h3>
-            <p>THIS IS THE TRANSCRPT</p>
+            <h3 class="text-lg font-semibold">{{full_article.video_title}}</h3>
+            <p>{{full_article.generated_content}}</p>
             <hr class="my-4 border-gray-300"></hr>
-            <h4 class="text-lg font-semibold">Video Title</h4>
-            <p class="text-gray-700">Title of the transcibed video</p>
-            <h4 class="text-lg font-semibold mt-4 ">Link to the video</h4>
-            <a href="#" class="text-blue-600 hover:underline">https://www.youtube.com/watch?v=JGwWNGJdvx8</a>
+            <h4 class="text-lg font-semibold">{{full_article.video_title}}</h4>
+            <p class="text-gray-700">{{full_article.video_title}}</p>
+            <h4 class="text-lg font-semibold mt-4 ">YouTube Link</h4>
+            <a href="#" class="text-blue-600 hover:underline">{{full_article.youtube_link}}</a>
         </div>
     </section>
     
     <footer>
         <div class="text-center p-4 text-black mt-8">
             <div class="content has-text-centered">
-                <p>Made with ❤️</p>
                 <a href="https://github.com/eshanpandey"><i class="fa fa-github" style="font-size:36px"></i></a>
             </div>
         </div>
