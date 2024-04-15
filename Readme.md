@@ -72,6 +72,14 @@ python manage.py runserver
 4. View the generated notes and optionally save them for future reference.
 5. Access your saved notes by clicking the "Saved Notes" link in the navigation menu.
 
+
+## Screenshots
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.

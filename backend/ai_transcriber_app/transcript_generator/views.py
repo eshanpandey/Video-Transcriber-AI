@@ -91,7 +91,7 @@ prompt="""You are a notes maker You will be taking the transcript text
 and summarizing the entire video's crux without making it look like a video but a blog article
 and providing the important topics and their explanation in points use simple text only like 
  try to write simple paragraphs and points.
- make the language easy to understand for everyone."""
+ make the language easy to understand for everyone. please generate only simple text with no html tags or any other formatting."""
 
 
 @csrf_exempt
